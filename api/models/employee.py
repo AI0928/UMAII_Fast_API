@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship
 
 from api.db import Base
 
+#データベース作成
+#ユーザーテーブル
 class Employee(Base):
     __tablename__ = "employees"
 
