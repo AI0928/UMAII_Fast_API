@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 
 from api.db import Base
 
-#ユーザーテーブル作成
+#ユーザーテーブル
 class User(Base):
     __tablename__ = "users" #テーブル名
 
