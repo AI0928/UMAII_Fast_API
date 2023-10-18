@@ -74,14 +74,13 @@ async def create_user(
     return user
 
 #全てのユーザーを返す関数
-async def get_users(db: AsyncSession) -> List[Tuple[int, str]]:
+async def get_users(db: AsyncSession) -> List[Tuple[int, str, str]]:
     result: Result = await (
         db.execute(
             select(
                 user_model.User.id,
                 user_model.User.name,
-                user_model.User.email,
-                user_model.User.password
+                user_model.User.email
             )
         )
     )
@@ -92,7 +91,7 @@ async def get_user(db: AsyncSession, user_id: int) -> Optional[user_model.User]:
     result: Result = await db.execute(
         select(user_model.User).filter(user_model.User.id == user_id)
     )
-    user: Optional[Tuple[user_model.user]] = result.first()
+    user: Optional[Tuple[user_model.User]] = result.first()
     return user[0] if user is not None else None  # 要素が一つであってもtupleで返却されるので１つ目の要素を取り出す
 
 #ユーザーの情報を更新する関数
