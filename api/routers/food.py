@@ -24,7 +24,16 @@ async def list_foods(db: AsyncSession = Depends(get_db)):
     return await food_crud.get_foods(db) #全ての料理がリストで返される
 
 #任意の料理の取得
-#追加予定
+@router.get("/foods/{food_id}", response_model=food_schema.Food)
+async def get_food(
+    food_id: int, 
+    db: AsyncSession = Depends(get_db)):
+    food = await food_crud.get_food(db, food_id=food_id)
+    if food is None:
+        raise HTTPException(status_code=404, detail="Food not found")
+    
+    return food
+
 
 #料理の追加
 @router.post("/foods", response_model=food_schema.FoodCreateResponse)

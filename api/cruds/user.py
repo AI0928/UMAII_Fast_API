@@ -40,8 +40,6 @@ async def authorize_user(
     
     return user
 
-
-
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 #パスワードをハッシュ化して登録する
 async def register_user(

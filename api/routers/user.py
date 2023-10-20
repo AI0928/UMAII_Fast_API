@@ -87,11 +87,6 @@ async def get_user(
 async def get_user_me(user: Annotated[user_model.User, Depends(get_user)]):
     return user
 
-
-
-
-
-
 #ログインに成功したらアクセストークンを返す関数
 def create_access_token(data: dict, expires_delta: timedelta, secret_key: str):
     expire = datetime.utcnow() + expires_delta
@@ -117,10 +112,6 @@ async def login(
         secret_key=settings.secret_key
     )
     return token_schema.Token(access_token=token, token_type='bearer')
-
-
-
-
 
 #ユーザー登録用のAPI
 @router.post('/api/register', response_model=user_schema.User)
