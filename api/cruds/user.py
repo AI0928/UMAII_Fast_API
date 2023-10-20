@@ -78,7 +78,8 @@ async def get_users(db: AsyncSession) -> List[Tuple[int, str, str]]:
             select(
                 user_model.User.id,
                 user_model.User.name,
-                user_model.User.email
+                user_model.User.email,
+                user_model.User.total_price
             )
         )
     )

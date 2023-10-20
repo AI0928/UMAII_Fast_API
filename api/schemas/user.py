@@ -7,8 +7,9 @@ from pydantic import BaseModel, Field
 class UserBase(BaseModel):
     #Optional[]は値を指定するか、省略する場合は None を指定する
     #Field()はnameがNoneの場合はexampleを返す
-    name: Optional[str] = Field(None, example="福沢諭吉")
-    email: Optional[str] = Field(None, example="yukichi@example.com")
+    name: Optional[str] = Field(None, example="aaa")
+    email: Optional[str] = Field(None, example="aaa@example.com")
+    total_price: Optional[int] = Field(None, example=0)
     
 #UserBaseにpasswordを加えた型
 #ユーザー作成時にリクエストボディとして受け取る型

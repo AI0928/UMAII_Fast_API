@@ -9,3 +9,4 @@ class Food(Base):
 
     id = Column(Integer, primary_key=True) #主キー
     name = Column(String(1024)) #名前
+    price = Column(Integer)

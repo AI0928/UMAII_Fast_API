@@ -37,6 +37,7 @@ async def update_food(
     original: food_model.Food
 ) -> food_model.Food:
     original.name = food_create.name
+    original.price = food_create.price
     db.add(original)
     await db.commit()
     await db.refresh(original)
@@ -50,7 +51,8 @@ async def get_foods(db: AsyncSession) -> List[Tuple[int, str]]:
             #select文
             select(
                 food_model.Food.id,
-                food_model.Food.name
+                food_model.Food.name,
+                food_model.Food.price
             )
         )
     )
