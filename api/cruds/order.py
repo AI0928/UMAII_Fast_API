@@ -17,6 +17,11 @@ from typing import List, Tuple, Optional
 from sqlalchemy import select
 from sqlalchemy.engine import Result
 
+from sqlalchemy import func
+
+from sklearn.decomposition import NMF
+import numpy as np
+
 #注文時に料理の値段分、ユーザーの料金に追加する
 async def add_price(
         db: AsyncSession,
@@ -60,7 +65,12 @@ async def get_orders(db: AsyncSession) -> List[Tuple[int, int, int]]:
             )
         )
     )
-    return result.all() #selectの結果をすべて取得
+    
+    nmf_data = result.all()
+    print(len(nmf_data))
+    
+
+    return nmf_data #selectの結果をすべて取得
 
 #削除
 async def delete_order(
@@ -69,3 +79,28 @@ async def delete_order(
 ) -> None:
     await db.delete(original)
     await db.commit()
+
+async def recommend(
+        db: AsyncSession
+)->None:
+    user_count = await db.execute(select(func.count('*')).select_from(user_model.User))
+    food_count = await db.execute(select(func.count('*')).select_from(food_model.Food))
+
+    user_count = user_count.scalar()
+    food_count = food_count.scalar()
+
+    out_array = []
+    for i in range(1, user_count+1):
+        in_array = []
+        for l in range(1, food_count+1):
+            #print(i, l)
+            count = await db.execute(select(func.count('*')).select_from(order_model.Order).where((order_model.Order.user_id == i) & (order_model.Order.food_id == l)))
+            count = count.scalar()
+            in_array.append(count)
+            #print(in_array)
+        out_array.append(in_array)
+        #print(out_array)
+    #a = await db.execute(select(func.count('*')).select_from(order_model.Order).where((order_model.Order.user_id == 2) & (order_model.Order.food_id == 1)))
+    #print('user_id:1, count:' + str(a.scalar()))
+    print(out_array)
+    return
