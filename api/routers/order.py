@@ -30,3 +30,9 @@ async def create_order(
     db: AsyncSession = Depends(get_db)
 ):
     return await order_crud.create_order(db, order_body)
+
+@router.get("/orders/recommed", response_model=None)
+async def recommed_order(
+    db: AsyncSession = Depends(get_db)
+):
+    return await order_crud.recommend(db)

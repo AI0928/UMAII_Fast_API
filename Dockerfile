@@ -6,6 +6,11 @@ WORKDIR /src
 
 # pipを使ってpoetryをインストール
 RUN pip install poetry
+#######################
+#poetry add 
+#追加
+#RUN pip install scikit-learn
+#RUN pip install numpy
 
 # poetryの定義ファイルをコピー (存在する場合)
 COPY pyproject.toml* poetry.lock* ./
