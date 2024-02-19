@@ -5,7 +5,7 @@ from api.db import Base
 
 #ユーザーテーブル
 class User(Base):
-    __tablename__ = "users" #テーブル名
+    __tablename__ = 'users' #テーブル名
 
     id = Column(Integer, primary_key=True) #主キー
     name = Column(String(1024)) #名前

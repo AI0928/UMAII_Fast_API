@@ -5,7 +5,7 @@ from api.db import Base
 
 #注文テーブル
 class Order(Base):
-    __tablename__ = "orders" #テーブル名
+    __tablename__ = 'orders' #テーブル名
 
     id = Column(Integer, primary_key=True) #主キー
     food_id = Column(Integer) #料理のID
