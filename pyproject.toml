@@ -14,6 +14,8 @@ aiomysql = "^0.2.0"
 python-jose = {extras = ["cryptgraphy"], version = "^3.3.0"}
 python-multipart = "^0.0.6"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+numpy = "^1.26.2"
+scikit-learn = "^1.3.2"
 
 
 [build-system]

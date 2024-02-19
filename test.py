@@ -1,26 +1,28 @@
-import numpy as np 
-from sklearn.decomposition.nmf import non_negative_factorization
+from sklearn.decomposition import NMF
+import numpy as np
 
-num_users = 10000
-num_items = 100
+# 0の部分は未知
+R = np.array([
+        [0.5, 0.1, 0, 0.4],
+        [0.5, 0, 0, 0.5],
+        [0.1, 0.8, 0, 0.1],
+        [0.2, 0.2, 0, 0.6],
+        [0, 0.1, 0.7, 0.2],
+        ]
+    )
 
-# 0と1からなるの行列
-X = np.random.randint(0, 1, size = [num_users, num_items], dtype = 'int')
-
-
-n_components = 3 # 特徴量の数（自分で決める）
-W, H, n_iter = non_negative_factorization(X, n_components=n_components)
-
-X_predict = np.dot(W,H)
-
-num_new_users = 100
-X_new = np.random.randint(1, 2, size = [num_new_users, num_items], dtype = 'int')
-
-W_new, H, n_iter = non_negative_factorization(X_new,
-                                              H=H,
-                                              update_H=False,
-                                              n_components=n_components)
-
-X_new_predict = np.dot(W_new, H)
-
-print(W_new, H, n_iter, X_new_predict)
+# 特徴の次元kを1から3まで変えてみる
+for k in range(1,4):
+    model = NMF(n_components=k, init='random', random_state=0)
+    P = model.fit_transform(R)
+    Q = model.components_
+    print("****************************")
+    print("k:",k)
+    print("Pは")
+    print(P)
+    print("Q^Tは")
+    print(Q)
+    print("P×Q^Tは")
+    print(np.dot(P,Q))
+    print("R-P×Q^Tは")
+    print(model.reconstruction_err_ )
